@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,400&display=swap');
 @import "tailwindcss";
 
-/* ============================================================
-   BOAZ-STUDY — Design tokens
-   ============================================================ */
 @theme {
   /* Primary — blue */
   --color-primary:     #0140FF;
@@ -27,9 +24,6 @@
   --font-sans:         'Nunito Sans', sans-serif;
 }
 
-/* ============================================================
-   Base layer
-   ============================================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -45,9 +39,7 @@
   }
 }
 
-/* ============================================================
-   Components layer
-   ============================================================ */
+
 @layer components {
 
   /* Primary button — blue */

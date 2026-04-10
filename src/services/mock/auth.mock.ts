@@ -1,7 +1,6 @@
 import type { AuthUser } from '../../contracts/api-contracts';
 
 // Admin profile — has ALL permissions
-// Use this to test that every button and section is visible
 export const adminUserMock: AuthUser = {
   sub: 'admin-uuid-0001',
   preferred_username: 'admin.user',
@@ -46,7 +45,6 @@ export const basicUserMock: AuthUser = {
   exp: 9999999999,
 };
 
-// Quick lookup — useful for the login mock selector
 export const mockProfiles: Record<string, AuthUser> = {
   admin: adminUserMock,
   basic: basicUserMock,

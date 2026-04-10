@@ -3,10 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { authService } from "../../../services/auth.service";
 import logo from "../../../assets/logo-boaz.svg";
 
-// ------------------------------------------------------------
-// Mock credentials — matches the mock profiles
-// In production these would be validated by Keycloak
-// ------------------------------------------------------------
+
 const MOCK_CREDENTIALS = [
   {
     email: "admin@boaz-study.com",
@@ -20,10 +17,6 @@ const MOCK_CREDENTIALS = [
   },
 ];
 
-// ------------------------------------------------------------
-// LoginPage — custom Keycloak login
-// Design matches BOAZ-STUDY Figma charter
-// ------------------------------------------------------------
 export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -36,10 +29,8 @@ export default function LoginPage() {
     setError(null);
     setIsLoading(true);
 
-    // Simulate network delay — realistic mock behavior
     await new Promise((resolve) => setTimeout(resolve, 800));
 
-    // Find matching mock credentials
     const match = MOCK_CREDENTIALS.find(
       (c) => c.email === email && c.password === password,
     );
@@ -58,8 +49,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex bg-background">
-      {/* Left panel — decorative, hidden on mobile */}
-      {/* Left panel — dark background to highlight the two-color logo */}
       <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 bg-[#1A1A2E] relative overflow-hidden">
         <img src={logo} alt="BOAZ-STUDY" className="w-44 mb-8 relative z-10" />
 
@@ -74,21 +63,18 @@ export default function LoginPage() {
           unique et sécurisé.
         </p>
 
-        {/* Decorative circles */}
-        {/* Decorative circles */}
         <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-primary -translate-x-1/3 translate-y-1/3" />
         <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-secondary translate-x-1/3 -translate-y-1/3" />
       </div>
 
-      {/* Right panel — login form */}
+  
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
-          {/* Logo — mobile only */}
+
           <div className="flex justify-center mb-8 lg:hidden">
             <img src={logo} alt="BOAZ-STUDY" className="h-12" />
           </div>
 
-          {/* Card */}
           <div className="card">
             <h1 className="text-2xl font-bold text-primary mb-1">Connexion</h1>
             <p className="text-sm text-text mb-8">
@@ -96,7 +82,7 @@ export default function LoginPage() {
             </p>
 
             <form onSubmit={handleLogin} className="space-y-5">
-              {/* Email */}
+
               <div>
                 <label htmlFor="email" className="label">
                   Adresse email
@@ -112,7 +98,6 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* Password */}
               <div>
                 <label htmlFor="password" className="label">
                   Mot de passe
@@ -128,14 +113,14 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* Error */}
+
               {error && (
                 <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-600">
                   {error}
                 </div>
               )}
 
-              {/* Submit */}
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -152,8 +137,7 @@ export default function LoginPage() {
               </button>
             </form>
           </div>
-
-          {/* Mock credentials hint — dev mode only */}
+          
           {import.meta.env.DEV && (
             <div className="mt-4 p-4 rounded-xl border border-secondary/30 bg-secondary/5">
               <p className="text-xs font-bold text-secondary mb-2">
