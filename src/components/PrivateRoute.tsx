@@ -1,5 +1,5 @@
 import {  Navigate } from 'react-router-dom';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '../store/auth.store';
 import { PageLoader } from './PageLoader';
 
 export function PrivateRoute({ children }: { children: React.ReactNode }) {
