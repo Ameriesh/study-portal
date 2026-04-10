@@ -1,5 +1,5 @@
 import keycloak from './keycloak.service';
-import { mockKeycloak } from './mock/keyclock.mock';
+import { mockKeycloak } from './mock/keycloak.mock';
 import { useAuthStore } from '../store/auth.store';
 import type { AuthUser } from '../contracts/api-contracts';
 

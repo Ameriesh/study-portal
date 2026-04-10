@@ -1,1 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,400&display=swap');
 @import "tailwindcss";
+
+/* ============================================================
+   BOAZ-STUDY — Design tokens
+   ============================================================ */
+@theme {
+  /* Primary — blue */
+  --color-primary:     #0140FF;
+
+  /* Secondary — orange */
+  --color-secondary:   #F88206;
+
+  /* Cancel — gray */
+  --color-cancel:      #D5D5D5;
+
+  /* Semantic */
+  --color-background:  #F5F6FA;
+  --color-foreground:  #4A4A4A;
+  --color-surface:     #FFFFFF;
+  --color-border:      #D8D8D8;
+  --color-ring:        #0140FF;
+  --color-text:        #0D0B26;
+  --color-btn:         #4379EE;
+
+  /* Typography */
+  --font-sans:         'Nunito Sans', sans-serif;
+}
+
+/* ============================================================
+   Base layer
+   ============================================================ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+}
+
+/* ============================================================
+   Components layer
+   ============================================================ */
+@layer components {
+
+  /* Primary button — blue */
+  .btn-primary {
+    @apply bg-btn text-white
+           md:px-4 md:py-3 px-3 py-2
+           rounded-full md:text-base text-sm
+           cursor-pointer whitespace-nowrap
+           border-[1.5px] border-btn
+           focus:outline-none
+           active:opacity-80
+           font-semibold transition-all duration-200
+           disabled:opacity-60 disabled:cursor-not-allowed
+           flex items-center justify-center gap-2;
+  }
+
+  /* Secondary button — orange */
+  .btn-secondary {
+    @apply bg-secondary text-white
+           md:px-4 md:py-3 px-3 py-2
+           rounded-lg md:text-base text-sm
+           cursor-pointer whitespace-nowrap
+           border-[1.5px] border-secondary
+           hover:opacity-90
+           focus:outline-none
+           active:opacity-80
+           font-semibold transition-all duration-200
+           disabled:opacity-60 disabled:cursor-not-allowed
+           flex items-center justify-center gap-2;
+  }
+
+  /* Cancel button — gray */
+  .btn-cancel {
+    @apply bg-cancel text-foreground
+           md:px-4 md:py-3 px-3 py-2
+           rounded-lg md:text-base text-sm
+           cursor-pointer whitespace-nowrap
+           border-[1.5px] border-cancel
+           hover:opacity-90
+           focus:outline-none
+           active:opacity-80
+           font-semibold transition-all duration-200;
+  }
+
+  /* Card — white surface */
+  .card {
+    @apply bg-surface rounded-3xl border-2 border-border p-6;
+  }
+
+  /* Form input */
+  .input {
+    @apply w-full px-4 py-2.5
+           rounded-lg border border-border
+           text-sm text-foreground bg-[#EFF1F999]
+           placeholder:text-gray-400
+           focus:outline-none
+           transition-colors duration-200;
+  }
+
+  /* Form label */
+  .label {
+    @apply block text-sm font-semibold text-foreground mb-1.5;
+  }
+
+  /* Badge primary */
+  .badge-primary {
+    @apply inline-block px-3 py-0.5
+           bg-primary/10 text-primary
+           text-xs font-semibold rounded-full;
+  }
+
+  /* Badge secondary */
+  .badge-secondary {
+    @apply inline-block px-3 py-0.5
+           bg-secondary/10 text-secondary
+           text-xs font-semibold rounded-full;
+  }
+
+  /* Sidebar nav item */
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-2.5
+           rounded-lg text-sm font-semibold
+           text-foreground cursor-pointer
+           hover:bg-primary/10 hover:text-primary
+           transition-colors duration-200;
+  }
+
+  /* Active sidebar nav item */
+  .nav-item-active {
+    @apply flex items-center gap-3 px-4 py-2.5
+           rounded-lg text-sm font-semibold
+           bg-primary/10 text-primary
+           cursor-pointer transition-colors duration-200;
+  }
+}

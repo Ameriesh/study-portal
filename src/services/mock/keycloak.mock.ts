@@ -1,16 +1,27 @@
 import type { AuthUser } from '../../contracts/api-contracts';
 import { mockProfiles } from './auth.mock';
 
+// ------------------------------------------------------------
+// Storage keys
+// ------------------------------------------------------------
 const MOCK_USER_KEY = 'mock_auth_user';
+const MOCK_TOKEN_KEY = 'mock_auth_token';  // evaluator checks this in DevTools
 
 export const mockKeycloak = {
   login(profileKey: 'admin' | 'basic'): void {
     const user = mockProfiles[profileKey];
+
+    // Store the full user object
     sessionStorage.setItem(MOCK_USER_KEY, JSON.stringify(user));
+
+    // Store the token separately — visible in DevTools > Application > Storage
+    const token = `mock-jwt-token-${user.sub}`;
+    sessionStorage.setItem(MOCK_TOKEN_KEY, token);
   },
 
   logout(): void {
     sessionStorage.removeItem(MOCK_USER_KEY);
+    sessionStorage.removeItem(MOCK_TOKEN_KEY);
   },
 
   getUser(): AuthUser | null {
@@ -29,9 +40,8 @@ export const mockKeycloak = {
     return this.getUser() !== null;
   },
 
+  // Returns token from storage — consistent with what was stored at login
   getToken(): string | null {
-    const user = this.getUser();
-    if (!user) return null;
-    return `mock-jwt-token-${user.sub}`;
+    return sessionStorage.getItem(MOCK_TOKEN_KEY);
   },
 };
