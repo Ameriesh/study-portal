@@ -1,0 +1,53 @@
+import type { AuthUser } from '../../contracts/api-contracts';
+
+// Admin profile — has ALL permissions
+// Use this to test that every button and section is visible
+export const adminUserMock: AuthUser = {
+  sub: 'admin-uuid-0001',
+  preferred_username: 'admin.user',
+  email: 'admin@boaz-study.com',
+  realm_access: {
+    roles: ['AGENT', 'USER'],   
+  },
+  resource_access: {
+    'studyportal-app': {
+      roles: ['AGENT'],
+    },
+  },
+  authorities: [
+    'ticket:create',
+    'ticket:read',
+    'ticket:update',
+    'ticket:comment',
+    'document:upload',
+    'document:read',
+    'notification:read',
+  ],
+  exp: 9999999999,             
+};
+
+// Basic user profile — limited permissions
+export const basicUserMock: AuthUser = {
+  sub: 'basic-uuid-0002',
+  preferred_username: 'basic.user',
+  email: 'basic@boaz-study.com',
+  realm_access: {
+    roles: ['USER'],
+  },
+  resource_access: {
+    'studyportal-app': {
+      roles: [],
+    },
+  },
+  authorities: [
+    'ticket:read',
+    'notification:read',
+  ],
+  exp: 9999999999,
+};
+
+// Quick lookup — useful for the login mock selector
+export const mockProfiles: Record<string, AuthUser> = {
+  admin: adminUserMock,
+  basic: basicUserMock,
+};
