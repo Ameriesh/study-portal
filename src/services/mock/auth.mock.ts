@@ -20,6 +20,7 @@ export const adminUserMock: AuthUser = {
     'ticket:comment',
     'document:upload',
     'document:read',
+    'document:download',
     'notification:read',
   ],
   exp: 9999999999,             
@@ -40,6 +41,7 @@ export const basicUserMock: AuthUser = {
   },
   authorities: [
     'ticket:read',
+    'document:read',
     'notification:read',
   ],
   exp: 9999999999,

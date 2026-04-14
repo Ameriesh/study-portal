@@ -1,26 +1,16 @@
-import type { Ticket } from '../../../../../contracts/api-contracts';
-import TicketTableRow from './TicketTableRow';
+import type { Document } from '../../../../../contracts/api-contracts';
+import DocumentTableRow from './DocumentTableRow';
 
-// ------------------------------------------------------------
-// TicketList — renders the list of tickets
-// ------------------------------------------------------------
-interface TicketListProps {
-  tickets: Ticket[];
-  onTicketsChange: (tickets: Ticket[]) => void;
+
+interface DocumentListProps {
+  documents: Document[];
 }
 
-export default function TicketList({ tickets, onTicketsChange }: TicketListProps) {
-  function handleStatusUpdate(id: string, newStatus: Ticket['status']) {
-    const updated = tickets.map((t) =>
-      t.id === id ? { ...t, status: newStatus } : t
-    );
-    onTicketsChange(updated);
-  }
-
-  if (tickets.length === 0) {
+export default function DocumentList({ documents }: DocumentListProps) {
+  if (documents.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center py-16">
-        <p className="text-sm text-gray-400">Aucun ticket pour le moment.</p>
+        <p className="text-sm text-gray-400">Aucun document disponible.</p>
       </div>
     );
   }
@@ -32,16 +22,16 @@ export default function TicketList({ tickets, onTicketsChange }: TicketListProps
           <thead className="bg-background/70 border-b border-border">
             <tr>
               <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
-                Ticket
+                Document
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
+                Type
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
+                Taille
               </th>
               <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
                 Date
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
-                Priorité
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
-                Statut
               </th>
               <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-gray-500">
                 Actions
@@ -49,12 +39,8 @@ export default function TicketList({ tickets, onTicketsChange }: TicketListProps
             </tr>
           </thead>
           <tbody>
-            {tickets.map((ticket) => (
-              <TicketTableRow
-                key={ticket.id}
-                ticket={ticket}
-                onStatusUpdate={handleStatusUpdate}
-              />
+            {documents.map((doc) => (
+              <DocumentTableRow key={doc.id} doc={doc} />
             ))}
           </tbody>
         </table>

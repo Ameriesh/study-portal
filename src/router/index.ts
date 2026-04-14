@@ -13,6 +13,15 @@ const DashboardPage = lazy(
 const TicketsPage = lazy(
   () => import('../portals/main-portal/features/tickets/pages/TicketsPage')
 );
+const TicketCreatePage = lazy(
+  () => import('../portals/main-portal/features/tickets/pages/TicketCreatePage')
+);
+const DocumentsPage = lazy(
+  () => import('../portals/main-portal/features/documents/Pages/DocumentsPage')
+);
+const DocumentUploadPage = lazy(
+  () => import('../portals/main-portal/features/documents/Pages/DocumentUploadPage')
+);
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +42,30 @@ export const router = createBrowserRouter([
       PrivateRoute,
       null,
       createElement(LazyPage, { page: TicketsPage })
+    ),
+  },
+  {
+    path: '/tickets/create',
+    element: createElement(
+      PrivateRoute,
+      null,
+      createElement(LazyPage, { page: TicketCreatePage })
+    ),
+  },
+  {
+    path: '/documents',
+    element: createElement(
+      PrivateRoute,
+      null,
+      createElement(LazyPage, { page: DocumentsPage })
+    ),
+  },
+  {
+    path: '/documents/upload',
+    element: createElement(
+      PrivateRoute,
+      null,
+      createElement(LazyPage, { page: DocumentUploadPage })
     ),
   },
   {

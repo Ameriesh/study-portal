@@ -7,9 +7,7 @@ import {
   PaperAirplaneIcon,
 } from '@heroicons/react/24/outline';
 
-// ------------------------------------------------------------
-// Status and priority badge colors
-// ------------------------------------------------------------
+
 const STATUS_STYLES: Record<Ticket['status'], string> = {
   OPEN:        'bg-blue-100 text-blue-700',
   IN_PROGRESS: 'bg-amber-100 text-amber-700',
@@ -36,25 +34,23 @@ const PRIORITY_LABELS: Record<Ticket['priority'], string> = {
   HIGH:   'Urgent',
 };
 
-// ------------------------------------------------------------
-// TicketCard props
-// ------------------------------------------------------------
+
 interface TicketCardProps {
   ticket: Ticket;
   onStatusUpdate: (id: string, status: Ticket['status']) => void;
 }
 
-// ------------------------------------------------------------
-// TicketCard — single ticket row with permission-based actions
-// ------------------------------------------------------------
+
 export default function TicketCard({ ticket, onStatusUpdate }: TicketCardProps) {
   const [comment, setComment] = useState('');
+  const [comments, setComments] = useState<string[]>([]);
   const [showComment, setShowComment] = useState(false);
   const [showStatusEdit, setShowStatusEdit] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   function handleCommentSubmit() {
     if (!comment.trim()) return;
-    // In production this would call the API
+    setComments((prev) => [comment.trim(), ...prev]);
     setComment('');
     setShowComment(false);
   }
@@ -95,6 +91,12 @@ export default function TicketCard({ ticket, onStatusUpdate }: TicketCardProps) 
 
       {/* Action buttons — permission based */}
       <div className="flex items-center gap-2 flex-wrap">
+        <button
+          onClick={() => setShowDetails((prev) => !prev)}
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-primary/5 hover:text-primary transition-colors"
+        >
+          {showDetails ? 'Masquer le détail' : 'Voir le détail'}
+        </button>
 
         {/* Modify status — ticket:update */}
         <ProtectedComponent permission="ticket:update">
@@ -119,6 +121,22 @@ export default function TicketCard({ ticket, onStatusUpdate }: TicketCardProps) 
         </ProtectedComponent>
 
       </div>
+
+      {/* Details block — visible for ticket:read users */}
+      {showDetails && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="rounded-lg border border-border bg-background/60 px-3 py-2">
+              <p className="text-gray-400">ID ticket</p>
+              <p className="font-semibold text-foreground mt-0.5">{ticket.id}</p>
+            </div>
+            <div className="rounded-lg border border-border bg-background/60 px-3 py-2">
+              <p className="text-gray-400">Créé par</p>
+              <p className="font-semibold text-foreground mt-0.5">{ticket.createdBy}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Status editor — ticket:update */}
       {showStatusEdit && (
@@ -176,6 +194,24 @@ export default function TicketCard({ ticket, onStatusUpdate }: TicketCardProps) 
             </div>
           </div>
         </ProtectedComponent>
+      )}
+
+      {comments.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <p className="text-xs font-semibold text-foreground mb-2">
+            Derniers commentaires
+          </p>
+          <div className="space-y-2">
+            {comments.map((entry, index) => (
+              <div
+                key={`${ticket.id}-comment-${index}`}
+                className="text-xs bg-background/70 border border-border rounded-lg px-3 py-2 text-foreground"
+              >
+                {entry}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
     </div>

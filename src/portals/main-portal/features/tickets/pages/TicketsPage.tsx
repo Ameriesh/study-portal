@@ -1,36 +1,35 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../../../../components/shared/Layout';
 import { ProtectedComponent } from '../../../../../components/ProtectedComponent';
 import TicketList from '../components/TicketList';
-import TicketCreateModal from '../components/TicketCreateModatl';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import type { Ticket } from '../../../../../contracts/api-contracts';
 import { ticketsMock } from '../../../../../services/mock/tickets.mock';
 
-// ------------------------------------------------------------
-// TicketsPage — main tickets feature page
-// Displays ticket list and conditionally shows action buttons
-// based on user permissions
-// ------------------------------------------------------------
 export default function TicketsPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setTickets(ticketsMock);
-    setIsLoading(false);
-  }, 800);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTickets(ticketsMock);
+      setIsLoading(false);
+    }, 800);
 
-  // Cleanup — cancel the timer if the component unmounts before it fires
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
 
-  function handleTicketCreated(newTicket: Ticket) {
-    setTickets((prev) => [newTicket, ...prev]);
-    setIsModalOpen(false);
-  }
+  useEffect(() => {
+    const createdTicket = (location.state as { createdTicket?: Ticket } | null)
+      ?.createdTicket;
+    if (!createdTicket) return;
+
+    setTickets((prev) => [createdTicket, ...prev]);
+    navigate('/tickets', { replace: true, state: null });
+  }, [location.state, navigate]);
 
   return (
     <Layout title="Tickets">
@@ -50,7 +49,7 @@ useEffect(() => {
           {/* Create button — only visible with ticket:create */}
           <ProtectedComponent permission="ticket:create">
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => navigate('/tickets/create')}
               className="btn-primary"
             >
               <PlusIcon className="w-4 h-4" />
@@ -79,15 +78,6 @@ useEffect(() => {
         </ProtectedComponent>
 
       </div>
-
-      {/* Create modal — only renders if modal is open */}
-      {isModalOpen && (
-        <TicketCreateModal
-          onClose={() => setIsModalOpen(false)}
-          onCreated={handleTicketCreated}
-        />
-      )}
-
     </Layout>
   );
 }

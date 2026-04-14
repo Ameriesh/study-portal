@@ -11,6 +11,9 @@
   /* Cancel — gray */
   --color-cancel:      #D5D5D5;
 
+  --color-success:     #2EAF63; 
+  --color-danger:      #E91B33;
+
   /* Semantic */
   --color-background:  #F5F6FA;
   --color-foreground:  #4A4A4A;

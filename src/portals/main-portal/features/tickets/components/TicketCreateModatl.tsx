@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import type { Ticket } from '../../../../../contracts/api-contracts';
 
-// ------------------------------------------------------------
-// TicketCreateModal — form to create a new ticket
-// Only rendered when user has ticket:create permission
-// ------------------------------------------------------------
+
 interface TicketCreateModalProps {
   onClose: () => void;
   onCreated: (ticket: Ticket) => void;
