@@ -22,6 +22,10 @@ const DocumentsPage = lazy(
 const DocumentUploadPage = lazy(
   () => import('../portals/main-portal/features/documents/Pages/DocumentUploadPage')
 );
+const NotificationsPage = lazy(
+  () => import('../portals/main-portal/features/notifications/pages/NotificationsPage')
+);
+
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +70,14 @@ export const router = createBrowserRouter([
       PrivateRoute,
       null,
       createElement(LazyPage, { page: DocumentUploadPage })
+    ),
+  },
+  {
+    path: '/notifications',
+    element: createElement(
+      PrivateRoute,
+      null,
+      createElement(LazyPage, { page: NotificationsPage })
     ),
   },
   {

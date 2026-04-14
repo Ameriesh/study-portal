@@ -2,10 +2,18 @@ import keycloak from './keycloak.service';
 import { mockKeycloak } from './mock/keycloak.mock';
 import { useAuthStore } from '../store/auth.store';
 import type { AuthUser } from '../contracts/api-contracts';
+import { notificationsMock } from './mock/notifications.mock';
 
 
 const isMockMode = import.meta.env.VITE_MOCK_AUTH === 'true';
 
+function syncNotificationsForUser(user: AuthUser | null): void {
+  if (user?.authorities?.includes('notification:read')) {
+    useAuthStore.getState().setNotifications(notificationsMock);
+  } else {
+    useAuthStore.getState().setNotifications([]);
+  }
+}
 
 export const authService = {
   async init(): Promise<boolean> {
@@ -14,6 +22,7 @@ export const authService = {
       const user = mockKeycloak.getUser();
       if (user) {
         useAuthStore.getState().setUser(user);
+        syncNotificationsForUser(user);
         return true;
       }
       return false;
@@ -29,7 +38,10 @@ export const authService = {
 
       if (authenticated) {
         const user = this.decodeToken();
-        if (user) useAuthStore.getState().setUser(user);
+        if (user) {
+          useAuthStore.getState().setUser(user);
+          syncNotificationsForUser(user);
+        }
       }
 
       return authenticated;
@@ -43,7 +55,10 @@ export const authService = {
   loginWithMock(profileKey: 'admin' | 'basic'): void {
     mockKeycloak.login(profileKey);
     const user = mockKeycloak.getUser();
-    if (user) useAuthStore.getState().setUser(user);
+    if (user) {
+      useAuthStore.getState().setUser(user);
+      syncNotificationsForUser(user);
+    }
   },
 
   // Logout — works in both modes

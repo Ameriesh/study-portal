@@ -26,7 +26,8 @@ export const adminUserMock: AuthUser = {
   exp: 9999999999,             
 };
 
-// Basic user profile — limited permissions
+// Basic user profile — limited permissions.
+// Retirer `notification:read` des authorities pour masquer cloche + page notifications (profil USER sans centre notif).
 export const basicUserMock: AuthUser = {
   sub: 'basic-uuid-0002',
   preferred_username: 'basic.user',
