@@ -4,7 +4,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
-import { ProtectedComponent } from '../../../../../components/ProtectedComponent';
+import ProtectedComponent from '../../../../../components/ProtectedComponent';
 import { usePermissions } from '../../../../../hooks/usePermissions';
 import type { Ticket } from '../../../../../contracts/api-contracts';
 import ActionMenu from '../../../../../components/shared/ActionMenu';

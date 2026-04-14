@@ -10,7 +10,7 @@ import { useAuthStore } from '../../store/auth.store';
 import { authService } from '../../services/auth.service';
 import { usePermissions } from '../../hooks/usePermissions';
 import { notificationsMock } from '../../services/mock/notifications.mock';
-import { ProtectedComponent } from '../ProtectedComponent';
+import ProtectedComponent from '../ProtectedComponent';
 
 interface NavbarProps {
   title: string;
@@ -79,8 +79,7 @@ export default function Navbar({ title }: NavbarProps) {
           <span>Mon organisation</span>
         </div>
 
-        {/* Notification bell — protected by notification:read */}
-        <ProtectedComponent permission="notification:read">
+        <ProtectedComponent permissions={['notification:read']}>
           <Link
             to="/notifications"
             className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
@@ -98,7 +97,6 @@ export default function Navbar({ title }: NavbarProps) {
         {/* Profile dropdown */}
         <div className="relative" ref={dropdownRef}>
 
-          {/* Trigger — avatar + name + chevron */}
           <button
             type="button"
             onClick={() => setIsDropdownOpen((prev) => !prev)}

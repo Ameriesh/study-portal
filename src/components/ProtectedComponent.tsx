@@ -9,7 +9,7 @@ interface ProtectedComponentProps {
   children: ReactNode;
 }
 
-export function ProtectedComponent({
+export default function ProtectedComponent({
   permission,
   permissions,
   requireAny = false,

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../../../../components/shared/Layout';
-import { ProtectedComponent } from '../../../../../components/ProtectedComponent';
+import ProtectedComponent from '../../../../../components/ProtectedComponent';
 import TicketList from '../components/TicketList';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import type { Ticket } from '../../../../../contracts/api-contracts';

@@ -6,7 +6,7 @@ import { BellSlashIcon } from '@heroicons/react/24/outline';
 import { useAuthStore } from '../../../../../store/auth.store';
 import { notificationsMock } from '../../../../../services/mock/notifications.mock';
 import { usePermissions } from '../../../../../hooks/usePermissions';
-import { ProtectedComponent } from '../../../../../components/ProtectedComponent';
+import ProtectedComponent from '../../../../../components/ProtectedComponent';
 
 export default function NotificationsPage() {
   const { notifications, setNotifications, markAllAsRead, unreadCount } =

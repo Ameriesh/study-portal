@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../../../../components/shared/Layout';
-import { ProtectedComponent } from '../../../../../components/ProtectedComponent';
+import ProtectedComponent from '../../../../../components/ProtectedComponent';
 import DocumentList from '../components/DocumentList';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import type { Document } from '../../../../../contracts/api-contracts';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ProtectedComponent } from '../../../../../components/ProtectedComponent';
+import ProtectedComponent from '../../../../../components/ProtectedComponent';
 import type { Ticket } from '../../../../../contracts/api-contracts';
 import {
   ChatBubbleLeftIcon,
