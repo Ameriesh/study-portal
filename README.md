@@ -3,6 +3,17 @@
 Application frontend ReactJS/TypeScript pour la gestion étudiante.
 Développée dans le cadre du test technique BOAZ-STUDY.
 
+## Démo vidéo
+
+Lien de démonstration : [Voir la démo sur Google Drive](https://drive.google.com/file/d/1poyxG9o0vIMfjGe0arK6H8IkR4qPcNbx/view?usp=drive_link)
+
+La vidéo montre :
+- Connexion avec les deux profils mock (admin + basic)
+- Navigation entre les portails
+- Protection des composants selon les permissions
+- Token JWT visible dans les DevTools
+
+
 ---
 
 ## Stack technique
