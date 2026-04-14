@@ -10,6 +10,9 @@ const LoginPage = lazy(
 const DashboardPage = lazy(
   () => import('../portals/main-portal/pages/DashboardPage')
 );
+const TicketsPage = lazy(
+  () => import('../portals/main-portal/features/tickets/pages/TicketsPage')
+);
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +25,14 @@ export const router = createBrowserRouter([
       PrivateRoute,
       null,
       createElement(LazyPage, { page: DashboardPage })
+    ),
+  },
+   {
+    path: '/tickets',
+    element: createElement(
+      PrivateRoute,
+      null,
+      createElement(LazyPage, { page: TicketsPage })
     ),
   },
   {
