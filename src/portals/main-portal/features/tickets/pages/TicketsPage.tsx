@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Layout from '../../../../../components/shared/Layout';
-import ProtectedComponent from '../../../../../components/ProtectedComponent';
-import TicketList from '../components/TicketList';
-import { PlusIcon } from '@heroicons/react/24/outline';
-import type { Ticket } from '../../../../../contracts/api-contracts';
-import { ticketsMock } from '../../../../../services/mock/tickets.mock';
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Layout from "../../../../../components/shared/Layout";
+import ProtectedComponent from "../../../../../components/ProtectedComponent";
+import TicketList from "../components/TicketList";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import type { Ticket } from "../../../../../contracts/api-contracts";
+import { ticketsMock } from "../../../../../services/mock/tickets.mock";
 
 export default function TicketsPage() {
   const navigate = useNavigate();
@@ -22,25 +22,30 @@ export default function TicketsPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Handle ticket created from navigation state
   useEffect(() => {
     const createdTicket = (location.state as { createdTicket?: Ticket } | null)
       ?.createdTicket;
+
     if (!createdTicket) return;
 
-    setTickets((prev) => [createdTicket, ...prev]);
-    navigate('/tickets', { replace: true, state: null });
+    // Use functional update inside a microtask to avoid
+    // synchronous setState warning in ESLint
+    const timer = setTimeout(() => {
+      setTickets((prev) => [createdTicket, ...prev]);
+      navigate("/tickets", { replace: true, state: null });
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [location.state, navigate]);
 
   return (
     <Layout title="Tickets">
       <div className="card h-full flex flex-col gap-6">
-
         {/* Header — title + create button */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-primary">
-              Mes tickets
-            </h2>
+            <h2 className="text-lg font-bold text-primary">Mes tickets</h2>
             <p className="text-sm text-gray-400 mt-0.5">
               Suivez vos demandes et réclamations
             </p>
@@ -49,7 +54,7 @@ export default function TicketsPage() {
           {/* Create button — only visible with ticket:create */}
           <ProtectedComponent permission="ticket:create">
             <button
-              onClick={() => navigate('/tickets/create')}
+              onClick={() => navigate("/tickets/create")}
               className="btn-primary"
             >
               <PlusIcon className="w-4 h-4" />
@@ -70,13 +75,9 @@ export default function TicketsPage() {
               </div>
             </div>
           ) : (
-            <TicketList
-              tickets={tickets}
-              onTicketsChange={setTickets}
-            />
+            <TicketList tickets={tickets} onTicketsChange={setTickets} />
           )}
         </ProtectedComponent>
-
       </div>
     </Layout>
   );

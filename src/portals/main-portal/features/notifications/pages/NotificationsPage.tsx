@@ -13,40 +13,42 @@ export default function NotificationsPage() {
     useAuthStore();
   const { hasPermission } = usePermissions();
 
-  if (!hasPermission('notification:read')) {
-    return <Navigate to="/" replace />;
-  }
-
+  // useEffect MUST be called before any conditional return
   useEffect(() => {
-    if (!hasPermission('notification:read')) return;
     const timer = setTimeout(() => {
       if (useAuthStore.getState().notifications.length === 0) {
         setNotifications(notificationsMock);
       }
     }, 500);
     return () => clearTimeout(timer);
-  }, [hasPermission, setNotifications]);
+  }, [setNotifications]);
+
+  // Redirect after all hooks have been called
+  if (!hasPermission('notification:read')) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <Layout title="Notifications">
       <ProtectedComponent permissions={['notification:read']}>
         <div className="card h-full flex flex-col gap-8 shadow-sm">
-          
-          {/* Header avec une meilleure hiérarchie */}
+
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6">
             <div>
               <h2 className="text-2xl font-bold text-primary tracking-tight">
                 Centre de notifications
               </h2>
               <div className="flex items-center gap-2 mt-1">
-                 {unreadCount > 0 ? (
-                    <span className="badge-secondary animate-pulse">
-                      {unreadCount} nouvelle{unreadCount > 1 ? 's' : ''}
-                    </span>
-                 ) : null}
-                 <p className="text-sm text-gray-400">
-                   {unreadCount > 0 ? "Vous avez des messages non lus" : "Toutes vos notifications ont été lues"}
-                 </p>
+                {unreadCount > 0 ? (
+                  <span className="badge-secondary animate-pulse">
+                    {unreadCount} nouvelle{unreadCount > 1 ? 's' : ''}
+                  </span>
+                ) : null}
+                <p className="text-sm text-gray-400">
+                  {unreadCount > 0
+                    ? 'Vous avez des messages non lus'
+                    : 'Toutes vos notifications ont été lues'}
+                </p>
               </div>
             </div>
 
@@ -60,15 +62,18 @@ export default function NotificationsPage() {
             )}
           </div>
 
-          {/* Corps de la page */}
-          <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+          <div className="flex-1 overflow-y-auto pr-2">
             {notifications.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 bg-background/50 rounded-3xl border border-dashed border-border">
                 <div className="bg-white p-4 rounded-full shadow-sm mb-4">
-                   <BellSlashIcon className="w-10 h-10 text-gray-300" />
+                  <BellSlashIcon className="w-10 h-10 text-gray-300" />
                 </div>
-                <p className="text-lg font-semibold text-foreground">Aucune notification</p>
-                <p className="text-sm text-gray-400">Nous vous préviendrons dès qu'il y aura du nouveau.</p>
+                <p className="text-lg font-semibold text-foreground">
+                  Aucune notification
+                </p>
+                <p className="text-sm text-gray-400">
+                  Nous vous préviendrons dès qu'il y aura du nouveau.
+                </p>
               </div>
             ) : (
               <NotificationList notifications={notifications} />
